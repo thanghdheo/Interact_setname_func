@@ -35,9 +35,18 @@ const main = async () => {
     from: account,
   });
 
+  const gasPrice = await web3.eth.getGasPrice();
+
+  const nonce = await web3.eth.getTransactionCount(account);
+
+  const chainId = await web3.eth.net.getId();
+
   await contract.methods.set("Ho Duc Thang").send({
+    nonce,
     from: account,
-    gas: gas,
+    gas,
+    gasPrice,
+    chainId,
   });
 
   const fullName = await contract.methods.get().call();
